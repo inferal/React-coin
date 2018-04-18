@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Header from './Components/common/Header';
-import List from './Components/list/List';
+import Header from './components/common/Header';
+import List from './components/list/List';
 import './index.css';
 
 const App = () => {
