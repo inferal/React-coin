@@ -11,6 +11,7 @@ export default class Search extends Component {
     super();
 
     this.state = {
+      searchResults: [],
       searchQuery: '',
       loading: false
     };
@@ -32,8 +33,22 @@ export default class Search extends Component {
     fetch(`${API_URL}/autocomplete?searchQuery=${searchQuery}`)
       .then(handleResponse)
       .then(result => {
-        this.setState({ loading: false });
+        this.setState({ loading: false, searchResults: result });
       });
+  }
+
+  renderSearchResult() {
+    const { searchResults } = this.state;
+
+    return (
+      <div className="Search-result-container">
+        {searchResults.map(result => (
+          <div key={result.id} className="Search-result">
+            {result.name} ({result.symbol})
+          </div>
+        ))}
+      </div>
+    );
   }
 
   render() {
@@ -53,6 +68,7 @@ export default class Search extends Component {
             <Loading width="12px" height="12px" />
           </div>
         )}
+        
       </div>
     );
   }
