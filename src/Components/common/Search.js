@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import { API_URL } from '../../config';
 import { handleResponse } from '../../helpers';
@@ -6,7 +7,7 @@ import Loading from './Loading';
 
 import './Search.css';
 
-export default class Search extends Component {
+class Search extends Component {
   constructor() {
     super();
 
@@ -17,6 +18,7 @@ export default class Search extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleRedirect = this.handleRedirect.bind(this);
   }
 
   handleChange(event) {
@@ -37,22 +39,49 @@ export default class Search extends Component {
       });
   }
 
-  renderSearchResult() {
-    const { searchResults } = this.state;
+  handleRedirect(currencyId) {
+    this.setState({
+      searchQuery: '',
+      searchResults: []
+    });
 
-    return (
-      <div className="Search-result-container">
-        {searchResults.map(result => (
-          <div key={result.id} className="Search-result">
-            {result.name} ({result.symbol})
-          </div>
-        ))}
-      </div>
-    );
+    this.props.history.push(`/currency/${currencyId}`);
+  }
+
+  renderSearchResult() {
+    const { searchResults, searchQuery, loading } = this.state;
+
+    if (!searchQuery) {
+      return '';
+    }
+
+    if (searchResults.length > 0) {
+      return (
+        <div className="Search-result-container">
+          {searchResults.map(result => (
+            <div
+              key={result.id}
+              className="Search-result"
+              onClick={() => this.handleRedirect(result.id)}
+            >
+              {result.name} ({result.symbol})
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    if (!loading) {
+      return (
+        <div className="Search-result-container">
+          <div className="Search-no-result">No results found.</div>
+        </div>
+      );
+    }
   }
 
   render() {
-    const { loading } = this.state;
+    const { loading, searchQuery } = this.state;
 
     return (
       <div className="Search">
@@ -62,14 +91,18 @@ export default class Search extends Component {
           type="text"
           placeholder="Currency name"
           onChange={this.handleChange}
+          value={searchQuery}
         />
         {loading && (
           <div className="Search-loading">
             <Loading width="12px" height="12px" />
           </div>
         )}
-        
+
+        {this.renderSearchResult()}
       </div>
     );
   }
 }
+
+export default withRouter(Search);
