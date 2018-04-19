@@ -76,7 +76,7 @@ export default class List extends Component {
       <div>
         <Table
           currencies={currencies}
-          
+          renderChangePercent={this.renderChangePercent}
         />
         <Pagination
           page={page}
