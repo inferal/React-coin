@@ -9,7 +9,7 @@ import './Header.css';
 const Header = () => {
   return (
     <div className="Header">
-      <Link to="/React-coin">
+      <Link to="/">
         <img src={logo} alt="logo" className="Header-logo" />
       </Link>
       <Search />
