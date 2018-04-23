@@ -2,7 +2,7 @@
   "name": "react-coin",
   "version": "0.1.0",
   "private": true,
-  "homepage": " https://inferal.github.io/React-coin/",
+  "homepage": "https://inferal.github.io/React-coin/",
   "dependencies": {
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
