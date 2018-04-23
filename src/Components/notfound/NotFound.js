@@ -8,7 +8,7 @@ const NotFound = () => {
     <div className="NotFound">
       <h1 className="NotFound-title">Oops! Page not found</h1>
 
-      <Link to="/" className="NotFound-link">
+      <Link to="/React-coin" className="NotFound-link">
         Go to homepage
       </Link>
     </div>
